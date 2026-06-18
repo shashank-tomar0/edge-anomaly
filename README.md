@@ -90,9 +90,43 @@ The server runs a lightweight FastAPI application that is ready to be deployed o
 
 ---
 
-## 📦 Production Deployment Guide
+## 📦 Production Deployment Playbook
 
-### Option A: Deployment as a systemd Service (Raspberry Pi/Debian)
+### Option A: Cloud Deployment (Render Free Tier - Recommended)
+Render allows you to deploy Docker containers directly from your GitHub repository for free:
+
+1. **Push your code**: Ensure all changes are committed and pushed to your GitHub repository.
+2. **Sign up for Render**: Go to [Render](https://render.com) and log in.
+3. **Create a Web Service**:
+   - Click **New +** and select **Web Service**.
+   - Connect your GitHub account and select the `edge-anomaly` repository.
+4. **Configure Deployment Settings**:
+   - **Name**: `edge-anomaly` (or custom name).
+   - **Environment**: **Docker** (Render will automatically detect your `Dockerfile`).
+   - **Instance Type**: **Free** (CPU and RAM limits are perfectly fine for this lightweight API).
+5. **Deploy**: Click **Create Web Service**. 
+   - Render will build your Docker image and deploy it.
+   - Once the deployment is complete, Render will provide a public URL (e.g., `https://edge-anomaly-xxxx.onrender.com`).
+   - Open `https://your-app.onrender.com/docs` to see the live interactive Swagger UI!
+
+---
+
+### Option B: Local Docker Container Deployment
+Use the included `Dockerfile` to containerize and run the server locally:
+
+1. **Build the Docker image**:
+   ```bash
+   docker build -t edge-anomaly-detector .
+   ```
+2. **Run the container**:
+   ```bash
+   docker run -d -p 8000:8000 edge-anomaly-detector
+   ```
+   Access the server at `http://localhost:8000/docs`.
+
+---
+
+### Option C: Deployment as a systemd Service (Raspberry Pi/Debian)
 To run the server as a background service that automatically starts on boot:
 
 1. Create a service file `/etc/systemd/system/edge-anomaly.service`:
@@ -117,21 +151,19 @@ To run the server as a background service that automatically starts on boot:
    sudo systemctl start edge-anomaly.service
    ```
 
-### Option B: Docker Container Deployment
-Use Docker to containerize and isolate the application:
+---
 
-1. Create a `Dockerfile`:
-   ```dockerfile
-   FROM python:3.11-slim
-   WORKDIR /app
-   COPY requirements.txt .
-   RUN pip install --no-cache-dir -r requirements.txt
-   COPY . .
-   EXPOSE 8000
-   CMD ["python", "main.py", "serve", "--host", "0.0.0.0", "--port", "8000"]
-   ```
-2. Build and run the container:
+## 🧪 Testing the Deployed API
+
+Once your API is deployed to Render (or another cloud provider), anyone can test it using our interactive test client script:
+
+1. Run the test script:
    ```bash
-   docker build -t edge-anomaly-detector .
-   docker run -d -p 8000:8000 edge-anomaly-detector
+   python test_deployed_api.py
    ```
+2. Enter your public URL when prompted. The script will:
+   - Perform a health check.
+   - Generate and send a mock normal vibration sequence.
+   - Generate and send a mock anomalous vibration sequence (to verify the 100% anomaly detection rate).
+   - Print a formatted table showing the API's predictions and round-trip latencies.
+

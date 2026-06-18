@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+env/
+venv/
+ENV/
+*.log
+.git/
+.gitignore
+.agents/
+.gemini/
+test_pipeline.py
+C:\Users\dell\.gemini/
