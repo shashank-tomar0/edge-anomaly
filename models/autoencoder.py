@@ -1,8 +1,9 @@
 import torch
 import torch.nn as nn
+import config
 
 class AnomalyAutoencoder(nn.Module):
-    def __init__(self, sequence_length):
+    def __init__(self, sequence_length=config.SEQUENCE_LENGTH, latent_dim=config.LATENT_DIM):
         super(AnomalyAutoencoder, self).__init__()
         
         # Encoder
@@ -11,12 +12,12 @@ class AnomalyAutoencoder(nn.Module):
             nn.ReLU(),
             nn.Linear(32, 16),
             nn.ReLU(),
-            nn.Linear(16, 8) # Latent space
+            nn.Linear(16, latent_dim) # Latent space
         )
         
         # Decoder
         self.decoder = nn.Sequential(
-            nn.Linear(8, 16),
+            nn.Linear(latent_dim, 16),
             nn.ReLU(),
             nn.Linear(16, 32),
             nn.ReLU(),

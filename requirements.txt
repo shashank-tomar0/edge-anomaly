@@ -4,3 +4,6 @@ pandas
 onnx
 onnxruntime
 scikit-learn
+fastapi
+uvicorn
+pydantic
