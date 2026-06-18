@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "edge-anomaly-cli"
+version = "1.0.0"
+description = "Interactive CLI client for Edge AI Anomaly Detection API"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "requests",
+    "numpy",
+]
+
+[project.scripts]
+edge-anomaly-cli = "cli_client:main"

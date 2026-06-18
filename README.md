@@ -155,15 +155,34 @@ To run the server as a background service that automatically starts on boot:
 
 ## 🧪 Testing the Deployed API
 
-Once your API is deployed to Render (or another cloud provider), anyone can test it using our interactive test client script:
+Once your API is deployed, you and your users can test it using the interactive test scripts.
+
+### Option A: Install and Run the CLI Tool Globally (Recommended)
+Anyone can install the interactive terminal client globally on their machine directly from GitHub:
+
+1. **Install globally**:
+   ```bash
+   pip install git+https://github.com/shashank-tomar0/edge-anomaly.git
+   ```
+2. **Run the client from anywhere**:
+   Simply run the command:
+   ```bash
+   edge-anomaly-cli
+   ```
+3. *(Optional)* **Set default API URL via Environment Variable**:
+   To avoid typing the URL every time:
+   - **Linux/macOS**: `export EDGE_ANOMALY_API_URL="https://your-app.onrender.com"`
+   - **Windows PowerShell**: `$env:EDGE_ANOMALY_API_URL="https://your-app.onrender.com"`
+
+---
+
+### Option B: Run the Deployment Test Client
+Alternatively, run the standalone test script:
 
 1. Run the test script:
    ```bash
    python test_deployed_api.py
    ```
-2. Enter your public URL when prompted. The script will:
-   - Perform a health check.
-   - Generate and send a mock normal vibration sequence.
-   - Generate and send a mock anomalous vibration sequence (to verify the 100% anomaly detection rate).
-   - Print a formatted table showing the API's predictions and round-trip latencies.
+2. Enter your public URL when prompted to verify basic single and batch predictions.
+
 
