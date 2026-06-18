@@ -104,5 +104,13 @@ class TestAnomalyPipeline(unittest.TestCase):
         self.assertEqual(res_data["total_samples"], 2)
         self.assertEqual(len(res_data["results"]), 2)
 
+    def test_06_cli_client_generation(self):
+        """Test cli_client helper signal generation."""
+        from cli_client import generate_signal
+        sig_normal = generate_signal(anomaly=False)
+        sig_anomalous = generate_signal(anomaly=True)
+        self.assertEqual(len(sig_normal), 64)
+        self.assertEqual(len(sig_anomalous), 64)
+
 if __name__ == "__main__":
     unittest.main()
