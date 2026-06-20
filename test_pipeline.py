@@ -93,6 +93,8 @@ class TestAnomalyPipeline(unittest.TestCase):
         self.assertIn("mse", res_data)
         self.assertIn("is_anomaly", res_data)
         self.assertIn("threshold", res_data)
+        self.assertIn("reconstructed", res_data)
+        self.assertEqual(len(res_data["reconstructed"]), config.SEQUENCE_LENGTH)
         self.assertTrue(isinstance(res_data["is_anomaly"], bool))
         
         # Test POST /predict batch samples
@@ -103,6 +105,8 @@ class TestAnomalyPipeline(unittest.TestCase):
         self.assertIn("results", res_data)
         self.assertEqual(res_data["total_samples"], 2)
         self.assertEqual(len(res_data["results"]), 2)
+        self.assertIn("reconstructed", res_data["results"][0])
+        self.assertEqual(len(res_data["results"][0]["reconstructed"]), config.SEQUENCE_LENGTH)
 
     def test_06_cli_client_generation(self):
         """Test cli_client helper signal generation."""

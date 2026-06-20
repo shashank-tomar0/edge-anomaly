@@ -40,6 +40,7 @@ class PredictionResult(BaseModel):
     mse: float = Field(..., description="Reconstruction mean squared error.")
     is_anomaly: bool = Field(..., description="Flag indicating if the reading is anomalous.")
     threshold: float = Field(..., description="The threshold used for classification.")
+    reconstructed: List[float] = Field(..., description="The reconstructed signal sequence.")
 
 class BatchPredictionResult(BaseModel):
     results: List[PredictionResult]
@@ -184,14 +185,15 @@ def predict(payload: PredictionRequest):
         
         results = []
         anomalies_in_batch = 0
-        for mse in mses:
+        for idx, mse in enumerate(mses):
             is_anomaly = bool(mse >= threshold)
             if is_anomaly:
                 anomalies_in_batch += 1
             results.append(PredictionResult(
                 mse=float(mse),
                 is_anomaly=is_anomaly,
-                threshold=threshold
+                threshold=threshold,
+                reconstructed=reconstructed[idx].tolist()
             ))
             
         # Update metrics

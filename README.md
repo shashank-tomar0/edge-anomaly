@@ -177,7 +177,25 @@ Anyone can install the interactive terminal client globally on their machine dir
 
 ---
 
-### Option B: Run the Deployment Test Client
+### Option B: Launch the Interactive Web Dashboard
+You can run a local Streamlit web dashboard to visually inspect reconstruction overlay charts:
+
+1. **Install requirements**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. **Launch the dashboard**:
+   ```bash
+   streamlit run dashboard.py
+   ```
+3. **Usage**:
+   - Use the sidebar to enter your API URL (defaults to `https://edge-anomaly.onrender.com`).
+   - Trigger manual simulations (Normal vs. Anomaly) or toggle the **Live Sensor Stream** to watch telemetry refresh in real-time.
+   - Inspect the **Reconstruction Overlay Chart** to see exactly how the autoencoder matches normal states and diverges during bearing faults.
+
+---
+
+### Option C: Run the Deployment Test Client
 Alternatively, run the standalone test script:
 
 1. Run the test script:

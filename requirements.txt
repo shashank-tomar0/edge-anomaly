@@ -7,3 +7,5 @@ scikit-learn
 fastapi
 uvicorn
 pydantic
+streamlit
+plotly
