@@ -169,10 +169,11 @@ Anyone can install the interactive terminal client globally on their machine dir
    ```bash
    edge-anomaly-cli
    ```
-3. *(Optional)* **Set default API URL via Environment Variable**:
-   To avoid typing the URL every time:
-   - **Linux/macOS**: `export EDGE_ANOMALY_API_URL="https://your-app.onrender.com"`
-   - **Windows PowerShell**: `$env:EDGE_ANOMALY_API_URL="https://your-app.onrender.com"`
+   *By default, the client is pre-configured to connect directly to the live public backend at `https://edge-anomaly.onrender.com`.*
+3. *(Optional)* **Connect to a local or alternative API**:
+   If you want to run the client against a local server, set the environment variable:
+   - **Linux/macOS**: `export EDGE_ANOMALY_API_URL="http://localhost:8000"`
+   - **Windows PowerShell**: `$env:EDGE_ANOMALY_API_URL="http://localhost:8000"`
 
 ---
 

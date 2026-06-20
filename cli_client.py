@@ -14,7 +14,7 @@ BOLD = "\033[1m"
 RESET = "\033[0m"
 CLEAR_SCREEN = "\033[H\033[2J"
 
-DEFAULT_URL = os.environ.get("EDGE_ANOMALY_API_URL", "http://localhost:8000")
+DEFAULT_URL = os.environ.get("EDGE_ANOMALY_API_URL", "https://edge-anomaly.onrender.com")
 
 def init_ansi():
     # Enable ANSI colors on Windows CMD/PowerShell if supported
