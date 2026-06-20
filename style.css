@@ -1,0 +1,663 @@
+/* ==========================================================================
+   Apple-Style Modern Aesthetic Stylesheet
+   ========================================================================== */
+
+/* 1. Global Reset & Theme Variables */
+:root {
+    --bg-color: #080B11;
+    --card-bg: rgba(17, 22, 34, 0.65);
+    --border-color: rgba(255, 255, 255, 0.07);
+    --border-hover: rgba(255, 255, 255, 0.15);
+    
+    --text-primary: #F3F4F6;
+    --text-secondary: #9CA3AF;
+    --text-muted: #6B7280;
+    
+    /* Accents (Saturated, refined - not overly colorful) */
+    --accent-blue: #3B82F6;
+    --accent-purple: #8B5CF6;
+    --accent-green: #10B981;
+    --accent-red: #EF4444;
+    --accent-orange: #F59E0B;
+    
+    --glass-blur: blur(20px);
+    --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+/* 2. Apple Glow Background Elements */
+.glow-bg {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.15;
+    z-index: -1;
+    pointer-events: none;
+    animation: slow-drift 20s infinite alternate ease-in-out;
+}
+
+.glow-blue {
+    background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%);
+    top: -200px;
+    left: -200px;
+}
+
+.glow-purple {
+    background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%);
+    bottom: -200px;
+    right: -200px;
+    animation-delay: -10s;
+}
+
+@keyframes slow-drift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(100px, 80px) scale(1.15); }
+}
+
+/* 3. Layout Container */
+.app-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-height: 100vh;
+}
+
+/* 4. Glassmorphism Header */
+.app-header {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    animation: slide-down 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo-icon {
+    font-size: 28px;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pulse-slow 3s infinite;
+}
+
+.logo-text h1 {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.logo-text span {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* Connection Control Block */
+.connection-control {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.connection-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-dot.online {
+    background-color: var(--accent-green);
+    box-shadow: 0 0 10px var(--accent-green);
+}
+
+.status-dot.offline {
+    background-color: var(--accent-red);
+    box-shadow: 0 0 10px var(--accent-red);
+}
+
+.status-dot.connecting {
+    background-color: var(--accent-orange);
+    animation: flash 1s infinite alternate;
+}
+
+.input-wrapper {
+    display: flex;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 4px;
+    width: 320px;
+    transition: all 0.3s ease;
+}
+
+.input-wrapper:focus-within {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.25);
+}
+
+.input-wrapper input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    padding: 8px 12px;
+    font-size: 13px;
+    font-family: var(--font-body);
+    width: 100%;
+}
+
+/* Buttons (Apple Style) */
+.btn {
+    border: none;
+    outline: none;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-secondary {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    padding: 12px 24px;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    color: white;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* 5. Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 24px;
+    align-items: start;
+    animation: fade-in 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 992px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.left-panel, .right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* 6. Card Base Styles (Apple Glassmorphism) */
+.card {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover {
+    border-color: var(--border-hover);
+}
+
+.card h2 {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-icon {
+    font-size: 16px;
+    color: var(--accent-blue);
+}
+
+.section-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+/* 7. Machine Status Card */
+.status-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.status-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.status-details h3 {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.status-details p {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+/* Status Modes */
+.status-card.info {
+    border-left: 4px solid var(--accent-blue);
+}
+.status-card.info .status-icon-wrapper {
+    background-color: rgba(59, 130, 246, 0.12);
+    color: var(--accent-blue);
+}
+
+.status-card.ok {
+    border-left: 4px solid var(--accent-green);
+    background: linear-gradient(to right, rgba(16, 185, 129, 0.05), transparent);
+}
+.status-card.ok .status-icon-wrapper {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--accent-green);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.status-card.anomaly {
+    border-left: 4px solid var(--accent-red);
+    background: linear-gradient(to right, rgba(239, 68, 68, 0.05), transparent);
+    animation: flash-border 1.5s infinite alternate;
+}
+.status-card.anomaly .status-icon-wrapper {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: var(--accent-red);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+@keyframes flash-border {
+    0% { border-left-color: var(--accent-red); }
+    100% { border-left-color: rgba(239, 68, 68, 0.3); }
+}
+
+/* 8. Simulation Controls Card */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.toggle-wrapper {
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.toggle-info p {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* IOS Style Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: .4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    transition: .4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+input:checked + .slider {
+    background-color: var(--accent-blue);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* 9. Telemetry Metrics */
+.metrics-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.metric-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    padding-bottom: 12px;
+}
+
+.metric-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.metric-title {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.metric-val {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.text-orange {
+    color: var(--accent-orange);
+}
+
+/* 10. Waveform Reconstruction Card */
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.model-meta-info {
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.chart-wrapper {
+    height: 320px;
+    position: relative;
+    width: 100%;
+}
+
+/* 11. Error Indicator Layout */
+.error-analysis-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Progress error bar comparison */
+.error-bar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.error-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.error-bar-value {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.progress-container {
+    width: 100%;
+    height: 14px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent-green), #34D399);
+    border-radius: 8px;
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+}
+
+.progress-bar.warning {
+    background: linear-gradient(90deg, var(--accent-green), var(--accent-orange));
+}
+
+.progress-bar.danger {
+    background: linear-gradient(90deg, var(--accent-orange), var(--accent-red));
+}
+
+/* Marker representing threshold limit */
+.threshold-line-marker {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--accent-orange);
+    box-shadow: 0 0 8px var(--accent-orange);
+    transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.marker-label {
+    position: absolute;
+    bottom: 18px;
+    transform: translateX(-50%);
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent-orange);
+    background: var(--bg-color);
+    padding: 2px 4px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    letter-spacing: 0.5px;
+}
+
+.error-bar-scale {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* Error stats grid */
+.error-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 576px) {
+    .error-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.stat-box {
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.stat-val {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* 12. Standard Animations */
+@keyframes slide-down {
+    0% { transform: translateY(-30px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flash {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+@keyframes pulse-slow {
+    0% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.05); filter: brightness(1.2); }
+    100% { transform: scale(1); filter: brightness(1); }
+}

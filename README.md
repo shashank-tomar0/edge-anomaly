@@ -177,8 +177,25 @@ Anyone can install the interactive terminal client globally on their machine dir
 
 ---
 
-### Option B: Launch the Interactive Web Dashboard
-You can run a local Streamlit web dashboard to visually inspect reconstruction overlay charts:
+### Option B: Launch the Apple-Style Aesthetic Web Portal (Recommended)
+We designed a modern, visually stunning web portal (`index.html`) featuring Apple-like glassmorphic UI cards, smooth transitions, glowing gradients, and animated charts showing the original vs. reconstructed sensor overlays in real-time.
+
+1. **Launch the Portal**:
+   - Double-click the `index.html` file in your file explorer, OR
+   - Start a simple HTTP server in the project folder:
+     ```bash
+     python -m http.server 8080
+     ```
+     And open `http://localhost:8080` in your browser.
+2. **Usage**:
+   - The portal connects automatically to your live Render endpoint (`https://edge-anomaly.onrender.com`).
+   - Click **Simulate Normal Signal** or **Inject Bearing Fault** to trigger predictions.
+   - Toggle **Live Telemetry Stream** to watch the line chart and reconstruction error bar update in real-time.
+
+---
+
+### Option C: Launch the Streamlit Web Dashboard
+Alternatively, run the local Streamlit dashboard:
 
 1. **Install requirements**:
    ```bash
@@ -188,15 +205,11 @@ You can run a local Streamlit web dashboard to visually inspect reconstruction o
    ```bash
    streamlit run dashboard.py
    ```
-3. **Usage**:
-   - Use the sidebar to enter your API URL (defaults to `https://edge-anomaly.onrender.com`).
-   - Trigger manual simulations (Normal vs. Anomaly) or toggle the **Live Sensor Stream** to watch telemetry refresh in real-time.
-   - Inspect the **Reconstruction Overlay Chart** to see exactly how the autoencoder matches normal states and diverges during bearing faults.
 
 ---
 
-### Option C: Run the Deployment Test Client
-Alternatively, run the standalone test script:
+### Option D: Run the Deployment Test Client
+Run the standalone test client script:
 
 1. Run the test script:
    ```bash

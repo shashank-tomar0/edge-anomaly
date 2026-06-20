@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edge AI Anomaly Detection Portal</title>
+    
+    <!-- Google Fonts: Outfit (headings) & Inter (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Background glowing gradients (Apple Style) -->
+    <div class="glow-bg glow-blue"></div>
+    <div class="glow-bg glow-purple"></div>
+
+    <div class="app-container">
+        <!-- Glassmorphism Header -->
+        <header class="app-header">
+            <div class="header-logo">
+                <i class="fa-solid fa-microchip logo-icon"></i>
+                <div class="logo-text">
+                    <h1>Edge Anomaly</h1>
+                    <span>INTELLIGENT MACHINE TELEMETRY</span>
+                </div>
+            </div>
+            
+            <!-- Connection Control -->
+            <div class="connection-control">
+                <div class="connection-status" id="connectionStatus">
+                    <span class="status-dot offline"></span>
+                    <span class="status-label">Checking connection...</span>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" id="apiUrlInput" placeholder="API Endpoint URL" value="https://edge-anomaly.onrender.com">
+                    <button id="connectBtn" class="btn btn-secondary">Connect</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Layout -->
+        <main class="dashboard-grid">
+            <!-- Left Panel: Controls & Telemetry -->
+            <section class="left-panel">
+                <!-- Status Banner -->
+                <div class="card status-card info" id="machineStatusCard">
+                    <div class="status-icon-wrapper">
+                        <i class="fa-solid fa-circle-check status-icon" id="machineStatusIcon"></i>
+                    </div>
+                    <div class="status-details">
+                        <h3>Machine State</h3>
+                        <p id="machineStatusText">INITIALIZING SYSTEM</p>
+                    </div>
+                </div>
+
+                <!-- Simulation Controls Card -->
+                <div class="card controls-card">
+                    <h2><i class="fa-solid fa-sliders header-icon"></i> Simulation Console</h2>
+                    <p class="section-desc">Generate vibration signals and push them to the neural network.</p>
+                    
+                    <div class="button-group">
+                        <button id="simNormalBtn" class="btn btn-primary btn-success">
+                            <i class="fa-solid fa-circle-play"></i> Simulate Normal Signal
+                        </button>
+                        <button id="simAnomalyBtn" class="btn btn-primary btn-danger">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Inject Bearing Fault
+                        </button>
+                    </div>
+
+                    <div class="toggle-wrapper">
+                        <div class="toggle-info">
+                            <h3>🛰️ Live Telemetry Stream</h3>
+                            <p>Continuously feed mock sensor streams to the backend.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="streamToggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Telemetry Metrics Card -->
+                <div class="card metrics-card">
+                    <h2><i class="fa-solid fa-chart-line header-icon"></i> Live Telemetry</h2>
+                    <p class="section-desc">Telemetry data fetched directly from the backend server.</p>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <span class="metric-title">Total Predictions</span>
+                            <span class="metric-val" id="metricTotalPreds">0</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-title">Anomaly Rate</span>
+                            <span class="metric-val" id="metricAnomalyRate">0.0%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-title">Avg Latency (Server)</span>
+                            <span class="metric-val text-orange" id="metricLatency">0.00 ms</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Rich Visualizations -->
+            <section class="right-panel">
+                <!-- Waveform Reconstruction Card -->
+                <div class="card chart-card">
+                    <div class="chart-header">
+                        <div>
+                            <h2><i class="fa-solid fa-wave-square header-icon"></i> Reconstruction Overlay</h2>
+                            <p class="section-desc">Overlay of original signal vs autoencoder reconstruction.</p>
+                        </div>
+                        <div class="model-meta-info" id="modelMetaInfo">
+                            Threshold: -- | Percentile: --
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="waveformChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Error Indicator Card -->
+                <div class="card error-card">
+                    <h2><i class="fa-solid fa-scale-unbalanced-flip header-icon"></i> Reconstruction Error Analysis</h2>
+                    <p class="section-desc">Sample Mean Squared Error (MSE) compared against the threshold.</p>
+                    
+                    <div class="error-analysis-layout">
+                        <!-- Progress Bar error comparison -->
+                        <div class="error-bar-section">
+                            <div class="error-bar-labels">
+                                <span>Reconstruction MSE (Error)</span>
+                                <span class="error-bar-value" id="currentMseVal">0.00000</span>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="errorProgressBar"></div>
+                                <div class="threshold-line-marker" id="thresholdLineMarker">
+                                    <span class="marker-label">Threshold</span>
+                                </div>
+                            </div>
+                            <div class="error-bar-scale">
+                                <span>0.0</span>
+                                <span id="errorMaxScale">0.03</span>
+                            </div>
+                        </div>
+
+                        <!-- Gauge/Status telemetry details -->
+                        <div class="error-stats-grid">
+                            <div class="stat-box">
+                                <span class="stat-label">Current MSE</span>
+                                <span class="stat-val" id="statsCurrentMse">0.00000</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-label">Threshold Limit</span>
+                                <span class="stat-val text-orange" id="statsThreshold">0.01412</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-label">Safety Factor</span>
+                                <span class="stat-val" id="statsSafetyFactor">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Script file -->
+    <script src="app.js"></script>
+</body>
+</html>

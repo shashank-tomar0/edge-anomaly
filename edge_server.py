@@ -4,9 +4,9 @@ import json
 import numpy as np
 import onnxruntime as ort
 from fastapi import FastAPI, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List, Union, Dict, Any
-
 import config
 
 # Initialize FastAPI app
@@ -15,6 +15,17 @@ app = FastAPI(
     description="A deploy-ready service running on-device for real-time sensor anomaly detection using autoencoders.",
     version="1.0.0"
 )
+
+# Enable Cross-Origin Resource Sharing (CORS)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 
 # Global state for loaded model and metadata
 model_session = None
