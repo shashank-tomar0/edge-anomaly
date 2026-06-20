@@ -15,3 +15,7 @@ dependencies = [
 
 [project.scripts]
 edge-anomaly-cli = "cli_client:main"
+
+[tool.setuptools]
+py-modules = ["cli_client", "config"]
+
